@@ -57,6 +57,7 @@ function updateUI(user) {
         // messageDiv.textContent = `Bienvenido, ${user.displayName}!`;
        
     } else {
-        console.log("Actualización cuando que?")
+        console.log("Actualización cuando se desloguea...")
+        mensaje.textContent = "Hola"
     }
 }
