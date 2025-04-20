@@ -1,4 +1,5 @@
 //Conexión con Firebase
+console.log("Entré a la nueva versión de auth...")
 firebase.initializeApp(firebaseConfig);
 const provider = new firebase.auth.GoogleAuthProvider();
 
