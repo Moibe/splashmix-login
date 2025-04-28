@@ -14,7 +14,7 @@ signinButton.addEventListener('click', () => {
         .then((result) => {
             const user = result.user;
             updateUI(user);
-            //redirige(user);            
+            redirige(user);            
         }).catch((error) => {
             console.log(`Error al iniciar sesión: ${error.message}`);
         });
@@ -68,4 +68,8 @@ function updateUI(user) {
         linkApp.style.display = 'none'; 
         logoutButton.style.display = 'none';
     }
+}
+
+function redirige(){
+    window.location.href = "https://app.splashmix.ink/";
 }
