@@ -1,13 +1,15 @@
 //Conexión con Firebase
-console.log("Entré a la nueva versión de auth...")
 firebase.initializeApp(firebaseConfig);
 const provider = new firebase.auth.GoogleAuthProvider();
 
-const button = document.getElementById("google-sign-in")
-const logoutButton = document.getElementById('logout-button');
+const titulo = document.getElementById('titulo');
 const mensaje = document.getElementById('mensaje');
+const signinButton = document.getElementById("google-sign-in");
+const linkApp = document.getElementById('link_app');
+const logoutButton = document.getElementById('logout-button');
 
-button.addEventListener('click', () => {
+
+signinButton.addEventListener('click', () => {
     firebase.auth().signInWithPopup(provider)
         .then((result) => {
             const user = result.user;
@@ -34,10 +36,9 @@ logoutButton.addEventListener('click', () => {
 // Listener para detectar el estado de autenticación
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-        // El usuario ha iniciado sesión
-        //updateUI(user);
-        console.log("Esto es user: ", user)
-        mensaje.textContent = `Bienvenido, ${user.displayName}!`
+        // El usuario ha iniciado sesión        
+        console.log("Esto es user: ", user);
+        updateUI(user);
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
         //updateUI(null);
@@ -49,16 +50,22 @@ firebase.auth().onAuthStateChanged((user) => {
 function updateUI(user) {
     if (user) {
         console.log("updateUI, actualizando...")
-        // messageDiv.textContent = ``;
-        // googleSignInButton.innerText =         
-        
-        // logoutButton.style.display = 'block';
+        titulo.textContent = 'splashmix.ink 🪅🐙'
+        mensaje.textContent = `Bienvenido, ${user.displayName}!`
+        signinButton.style.display = 'none';
+        linkApp.style.display = 'block';    
+        logoutButton.style.display = 'block';
 
         // Muestra un mensaje de bienvenida
         // messageDiv.textContent = `Bienvenido, ${user.displayName}!`;
        
     } else {
-        console.log("Actualización cuando se desloguea...")
-        mensaje.textContent = "Hola"
+        console.log("Deslogueado...");
+        titulo.textContent = 'block';
+        titulo.textContent = 'Bienvenido a splashmix.ink 🪅🐙';
+        mensaje.textContent = "";
+        signinButton.style.display = 'block';
+        linkApp.style.display = 'none'; 
+        logoutButton.style.display = 'none';
     }
 }
