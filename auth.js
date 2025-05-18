@@ -38,11 +38,15 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // El usuario ha iniciado sesión        
         console.log("Esto es user: ", user);
+        localStorage.setItem('estadoUsuario', 'Conectado');
+        localStorage.setItem('usuario', user.uid);
         updateUI(user);
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
         //updateUI(null);
         console.log("Esto es user: ", user)
+        localStorage.setItem('estadoUsuario', 'Desconectado');
+        localStorage.setItem('usuario', ""); 
     }
 });
 
