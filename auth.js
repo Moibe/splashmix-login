@@ -40,6 +40,7 @@ firebase.auth().onAuthStateChanged((user) => {
         console.log("Esto es user: ", user);
         localStorage.setItem('estadoUsuario', 'Conectado');
         localStorage.setItem('usuario', user.uid);
+        console.log("Elementos seteados.")
         updateUI(user);
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
@@ -47,6 +48,7 @@ firebase.auth().onAuthStateChanged((user) => {
         console.log("Esto es user: ", user)
         localStorage.setItem('estadoUsuario', 'Desconectado');
         localStorage.setItem('usuario', ""); 
+        console.log("Elementos deseteados.")
     }
 });
 
