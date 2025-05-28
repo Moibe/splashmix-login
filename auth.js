@@ -8,7 +8,6 @@ const signinButton = document.getElementById("google-sign-in");
 const linkApp = document.getElementById('link_app');
 const logoutButton = document.getElementById('logout-button');
 
-
 signinButton.addEventListener('click', () => {
     firebase.auth().signInWithPopup(provider)
         .then((result) => {
@@ -39,7 +38,7 @@ firebase.auth().onAuthStateChanged((user) => {
         // El usuario ha iniciado sesión        
         console.log("Esto es user: ", user);
         localStorage.setItem('estadoUsuario', 'Conectado');
-        localStorage.setItem('usuario', user.uid);
+        localStorage.setItem('usuario', user.email);
         console.log("Elementos seteados.")
         updateUI(user);
     } else {
@@ -61,9 +60,6 @@ function updateUI(user) {
         signinButton.style.display = 'none';
         linkApp.style.display = 'block';    
         logoutButton.style.display = 'block';
-
-        // Muestra un mensaje de bienvenida
-        // messageDiv.textContent = `Bienvenido, ${user.displayName}!`;
        
     } else {
         console.log("Deslogueado...");
