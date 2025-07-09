@@ -56,7 +56,7 @@ function updateUI(user) {
     if (user) {
         console.log("updateUI, actualizando...")
         titulo.textContent = 'splashmix.ink 🪅🐙'
-        mensaje.textContent = `Bienvenido, ${user.displayName}!`
+        mensaje.textContent = `Bienvenido 182, ${user.displayName}!`
         signinButton.style.display = 'none';
         linkApp.style.display = 'block';    
         logoutButton.style.display = 'block';
@@ -64,7 +64,7 @@ function updateUI(user) {
     } else {
         console.log("Deslogueado...");
         titulo.textContent = 'block';
-        titulo.textContent = 'Bienvenido a splashmix.ink 🪅🐙';
+        titulo.textContent = 'Bienvenido a splashmix.ink 182 🪅🐙';
         mensaje.textContent = "";
         signinButton.style.display = 'block';
         linkApp.style.display = 'none'; 
