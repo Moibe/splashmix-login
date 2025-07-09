@@ -56,7 +56,7 @@ function updateUI(user) {
     if (user) {
         console.log("updateUI, actualizando...")
         titulo.textContent = 'splashmix.ink 🪅🐙'
-        mensaje.textContent = `Bienvenido 182, ${user.displayName}!`
+        mensaje.textContent = `Bienvenido 183, ${user.displayName}!`
         signinButton.style.display = 'none';
         linkApp.style.display = 'block';    
         logoutButton.style.display = 'block';
