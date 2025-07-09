@@ -64,7 +64,7 @@ function updateUI(user) {
     } else {
         console.log("Deslogueado...");
         titulo.textContent = 'block';
-        titulo.textContent = 'Bienvenido a splashmix.ink 182 🪅🐙';
+        titulo.textContent = 'Bienvenido a splashmix.ink🪅🐙';
         mensaje.textContent = "";
         signinButton.style.display = 'block';
         linkApp.style.display = 'none'; 
