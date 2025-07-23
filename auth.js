@@ -12,6 +12,7 @@ signinButton.addEventListener('click', () => {
     firebase.auth().signInWithPopup(provider)
         .then((result) => {
             const user = result.user;
+            //Aquí, revisar si el user existe.
             updateUI(user);
             //redirige(user);            
         }).catch((error) => {
@@ -38,7 +39,10 @@ firebase.auth().onAuthStateChanged((user) => {
         // El usuario ha iniciado sesión        
         console.log("Esto es user: ", user);
         localStorage.setItem('estadoUsuario', 'Conectado');
-        localStorage.setItem('usuario', user.email);
+        localStorage.setItem('email', user.email);
+        localStorage.setItem('name', user.displayName);
+        localStorage.setItem('photo', user.photoURL);
+        localStorage.setItem('uid', user.uid);
         console.log("Elementos seteados.")
         updateUI(user);
     } else {
