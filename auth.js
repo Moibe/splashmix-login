@@ -50,7 +50,7 @@ firebase.auth().onAuthStateChanged((user) => {
         //updateUI(null);
         console.log("Esto es user: ", user)
         localStorage.setItem('estadoUsuario', 'Desconectado');
-        localStorage.setItem('usuario', "");
+        localStorage.removeItem('usuario');
         localStorage.removeItem('email');
         localStorage.removeItem('name');
         localStorage.removeItem('photo');
