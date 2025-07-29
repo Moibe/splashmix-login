@@ -10,6 +10,7 @@ const logoutButton = document.getElementById('logout-button');
 const info_text = document.getElementById('info_text');
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Versión 0.0.0")
     const urlParams = new URLSearchParams(window.location.search);
     
     // Puedes elegir el nombre del parámetro que quieras, por ejemplo 'logout' o 'action=signout'
