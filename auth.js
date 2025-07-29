@@ -9,6 +9,32 @@ const linkApp = document.getElementById('link_app');
 const logoutButton = document.getElementById('logout-button');
 const info_text = document.getElementById('info_text');
 
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Puedes elegir el nombre del parámetro que quieras, por ejemplo 'logout' o 'action=signout'
+    if (urlParams.has('logout') && urlParams.get('logout') === 'true') {
+        console.log("Parámetro 'logout=true' detectado en la URL. Iniciando cierre de sesión...");
+        
+        firebase.auth().signOut()
+            .then(() => {
+                console.log('Sesión cerrada correctamente vía URL.');
+                // Redirige a una URL limpia para evitar cierres de sesión repetidos al refrescar
+                // Puedes redirigir a tu página de inicio de sesión o a la página principal limpia
+                const cleanUrl = window.location.origin + window.location.pathname;
+                window.location.replace(cleanUrl); // window.location.replace() es mejor que href para esto
+                                                   // porque previene que el usuario vuelva a la URL con el logout
+                                                   // usando el botón "atrás" del navegador.
+            })
+            .catch((error) => {
+                console.error(`Error al cerrar sesión vía URL: ${error.message}`);
+                // Incluso si hay un error, es una buena práctica redirigir para limpiar la URL
+                const cleanUrl = window.location.origin + window.location.pathname;
+                window.location.replace(cleanUrl);
+            });
+    }
+});
+
 signinButton.addEventListener('click', () => {
     firebase.auth().signInWithPopup(provider)
         .then((result) => {
