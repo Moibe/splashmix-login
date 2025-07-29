@@ -70,7 +70,7 @@ firebase.auth().onAuthStateChanged((user) => {
         localStorage.setItem('estadoUsuario', 'Conectado');
         console.log("Checando if 1st time...")
         let first = checkIf1stTime();   
-        console.log("Esto es first: ", first)    
+        console.log("Hay usuario y esto es first: ", first)    
 
         localStorage.setItem('1avez', 'false');
         localStorage.setItem('email', user.email);
@@ -82,8 +82,7 @@ firebase.auth().onAuthStateChanged((user) => {
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
         //updateUI(null);
-        console.log("Esto es user: ", user)
-         
+        console.log("Usuario no logueado")         
         localStorage.setItem('estadoUsuario', 'Desconectado');
         localStorage.removeItem('usuario');
         localStorage.removeItem('email');
@@ -91,11 +90,14 @@ firebase.auth().onAuthStateChanged((user) => {
         localStorage.removeItem('photo');
         localStorage.removeItem('uid'); 
         console.log("Elementos deseteados.")
+        let first = checkIf1stTime();
+        console.log("No hay usuario y esto es first: ", first)  
+        updateUI(user, first)
     }
 });
 
 function checkIf1stTime() {
-    let uno; // Declara la variable 'uno'
+    let primeraVez; // Declara la variable 'uno'
 
         // Obtener el valor de '1avez' del localStorage
         const unaVezEnLocalStorage = localStorage.getItem('1avez');
@@ -103,46 +105,47 @@ function checkIf1stTime() {
         // Comprobar si 'unaVezEnLocalStorage' es null (es decir, no existe)
         if (unaVezEnLocalStorage === null) {
             console.log("El campo '1avez' NO existe en localStorage.");
-            uno = true;
+            primeraVez = true;
         } else {
             // El campo '1avez' SÍ existe. Su valor puede ser lo que sea que hayas guardado.
             console.log("El campo '1avez' SÍ existe en localStorage. Su valor es:", unaVezEnLocalStorage);
-            uno = false; 
+            primeraVez = false; 
         }
 
-        console.log("El valor final de 'uno' es:", uno);
-        return uno
+        console.log("El valor final de 'primeraVez' es:", primeraVez);
+        return primeraVez
 }
 
 // Función para actualizar la interfaz de usuario
 function updateUI(user, first) {
+    console.log("Estoy en updateUI y first es: ", first)
     if (user) {
-        console.log("updateUI, actualizando...")        
+        console.log("updateUI, hay usuario...")        
         titulo.textContent = 'splashmix.ink 🪅🐙'
         mensaje.textContent = `Bienvenido, ${user.displayName}!`
         signinButton.style.display = 'none';
         linkApp.style.display = 'block';    
         logoutButton.style.display = 'block';
-        console.log("En updateUI cuando si hay user First es: ", first)
-        if (first==false){
-            console.log("Entre a first is false dentro de update cuando si hay user...")
-            info_text.style.display = 'none'
-        }
-        
+        info_text.style.display = 'none';   
        
     } else {
-        console.log("Deslogueado...");
+        console.log("Estoy en updateUI y no hay usuario...");
         console.log("First es: ", first)
+        if (first==false){
+            console.log("Ya ha habido usuario aquí.")
+            info_text.style.display = 'none'
+        }
+        else{ //Si no es false, o si no existe, debería caer aquí.
+            console.log("No ha habido usuario aquí.")
+            info_text.style.display = 'block'
+            info_text.textContent = 'y empieza a usar tus créditos gratis.'
+        }
         titulo.textContent = 'block';
         titulo.textContent = 'Bienvenido a splashmix.ink🪅🐙';
         mensaje.textContent = "";
         signinButton.style.display = 'block';
         linkApp.style.display = 'none'; 
-        logoutButton.style.display = 'none';
-        if (first==false){
-            info_text.style.display = 'none'
-        }
-        
+        logoutButton.style.display = 'none';        
     }
 }
 
