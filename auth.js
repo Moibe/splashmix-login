@@ -15,8 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Puedes elegir el nombre del parámetro que quieras, por ejemplo 'logout' o 'action=signout'
     if (urlParams.has('logout') && urlParams.get('logout') === 'true') {
-        console.log("Parámetro 'logout=true' detectado en la URL. Iniciando cierre de sesión...");
-        
+                
         firebase.auth().signOut()
             .then(() => {
                 console.log('Sesión cerrada correctamente vía URL.');
@@ -41,7 +40,6 @@ signinButton.addEventListener('click', () => {
         .then((result) => {
             const user = result.user;
             let first = checkIf1stTime();
-            console.log("En signIn first es: ", first)
             updateUI(user, first);
             //redirige(user);            
         }).catch((error) => {
@@ -67,32 +65,28 @@ logoutButton.addEventListener('click', () => {
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // El usuario ha iniciado sesión        
-        console.log("Esto es user: ", user);
         localStorage.setItem('estadoUsuario', 'Conectado');
-        console.log("Checando if 1st time...")
         let first = checkIf1stTime();   
-        console.log("Hay usuario y esto es first: ", first)    
 
         localStorage.setItem('1avez', 'false');
         localStorage.setItem('email', user.email);
         localStorage.setItem('name', user.displayName);
         localStorage.setItem('photo', user.photoURL);
         localStorage.setItem('uid', user.uid);
-        console.log("Elementos seteados.")
+
         updateUI(user, first);
     } else {
         // El usuario ha cerrado sesión o no ha iniciado sesión
         //updateUI(null);
-        console.log("Usuario no logueado")         
+        //console.log("Usuario no logueado")         
         localStorage.setItem('estadoUsuario', 'Desconectado');
         localStorage.removeItem('usuario');
         localStorage.removeItem('email');
         localStorage.removeItem('name');
         localStorage.removeItem('photo');
         localStorage.removeItem('uid'); 
-        console.log("Elementos deseteados.")
+        
         let first = checkIf1stTime();
-        console.log("No hay usuario y esto es first: ", first)  
         updateUI(user, first)
     }
 });
@@ -105,23 +99,20 @@ function checkIf1stTime() {
 
         // Comprobar si 'unaVezEnLocalStorage' es null (es decir, no existe)
         if (unaVezEnLocalStorage === null) {
-            console.log("El campo '1avez' NO existe en localStorage.");
             primeraVez = true;
         } else {
             // El campo '1avez' SÍ existe. Su valor puede ser lo que sea que hayas guardado.
-            console.log("El campo '1avez' SÍ existe en localStorage. Su valor es:", unaVezEnLocalStorage);
             primeraVez = false; 
         }
 
-        console.log("El valor final de 'primeraVez' es:", primeraVez);
         return primeraVez
 }
 
 // Función para actualizar la interfaz de usuario
 function updateUI(user, first) {
-    console.log("Estoy en updateUI y first es: ", first)
+    
     if (user) {
-        console.log("updateUI, hay usuario...")        
+        // console.log("updateUI, hay usuario...")        
         titulo.textContent = 'splashmix.ink 🪅🐙'
         mensaje.textContent = `Bienvenido, ${user.displayName}!`
         signinButton.style.display = 'none';
@@ -130,8 +121,8 @@ function updateUI(user, first) {
         info_text.style.display = 'none';   
        
     } else {
-        console.log("Estoy en updateUI y no hay usuario...");
-        console.log("First es: ", first)
+        // console.log("Estoy en updateUI y no hay usuario...");
+        
         if (first==false){
             console.log("Ya ha habido usuario aquí.")
             info_text.style.display = 'none'
