@@ -1,5 +1,7 @@
 // loader.js
 
+console.log("Estoy en loaderjs")
+
 // 1. Define la variable del entorno
 const environment = 'dev'; // Cámbialo a 'prod' cuando vayas a producción
 
