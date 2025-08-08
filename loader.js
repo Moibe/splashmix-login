@@ -22,4 +22,4 @@ script.onerror = () => {
 };
 
 // 4. Agrega el nuevo script al <head> o <body> del documento
-document.head.appendChild(script);
+document.body.appendChild(script);
