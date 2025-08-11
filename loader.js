@@ -3,10 +3,14 @@
 // 1. Define la variable del entorno
 const environment = 'dev'; // Cámbialo a 'prod' cuando vayas a producción
 
-// 2. Determina el nombre del archivo de configuración
+// 2. Establece un atributo de datos en el cuerpo del documento
+// Esto hace que la información del entorno esté disponible para todos los scripts.
+document.body.setAttribute('data-environment', environment);
+
+// 3. Determina el nombre del archivo de configuración
 const configFileName = (environment === 'dev') ? 'config_dev.js' : 'config_prod.js';
 
-// 3. Función para cargar un script dinámicamente
+// ... (resto de la función loadScript sin cambios) ...
 const loadScript = (src, isModule = false) => {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
@@ -24,7 +28,6 @@ const loadScript = (src, isModule = false) => {
 loadScript(configFileName)
     .then(() => {
         console.log(`El archivo de configuración ${configFileName} se ha cargado correctamente.`);
-        // Una vez que la configuración está lista, carga auth.js
         return loadScript('auth.js', true);
     })
     .then(() => {

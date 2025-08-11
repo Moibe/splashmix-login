@@ -110,10 +110,19 @@ function checkIf1stTime() {
 
 // Función para actualizar la interfaz de usuario
 function updateUI(user, first) {
+
+    // Lee el atributo de datos que establecimos en loader.js
+    const environment = document.body.dataset.environment;
+
+    // Comprueba si el entorno es 'dev' para añadir el emoji
+        let tituloTexto = 'splashmix.ink 🪅🐙';
+        if (environment === 'dev') {
+            tituloTexto += ' 👾';
+        }
     
     if (user) {
         // console.log("updateUI, hay usuario...")        
-        titulo.textContent = 'splashmix.ink 🪅🐙'
+        titulo.textContent = tituloTexto;
         mensaje.textContent = `Bienvenido, ${user.displayName}!`
         signinButton.style.display = 'none';
         linkApp.style.display = 'block';    
@@ -133,7 +142,7 @@ function updateUI(user, first) {
             info_text.textContent = 'y empieza a usar tus créditos gratis.'
         }
         titulo.textContent = 'block';
-        titulo.textContent = 'Bienvenido a splashmix.ink🪅🐙';
+        titulo.textContent = tituloTexto;
         mensaje.textContent = "";
         signinButton.style.display = 'block';
         linkApp.style.display = 'none'; 
