@@ -1,7 +1,7 @@
 // loader.js
+import { environment } from './environment.js';
 
-// 1. Define la variable del entorno
-const environment = 'dev'; // Cámbialo a 'prod' cuando vayas a producción
+document.body.setAttribute('data-environment', environment);
 
 // 2. Establece un atributo de datos en el cuerpo del documento
 // Esto hace que la información del entorno esté disponible para todos los scripts.
