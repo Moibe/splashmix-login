@@ -1,4 +1,3 @@
-// loader.js
 import { environment } from './environment.js';
 
 document.body.setAttribute('data-environment', environment);
@@ -28,10 +27,10 @@ const loadScript = (src, isModule = false) => {
 loadScript(configFileName)
     .then(() => {
         console.log(`El archivo de configuración ${configFileName} se ha cargado correctamente.`);
-        return loadScript('auth.js', true);
+        return loadScript('auth_login.js', true);
     })
     .then(() => {
-        console.log('El archivo auth.js se ha cargado correctamente.');
+        console.log('El archivo auth_login.js se ha cargado correctamente.');
     })
     .catch((error) => {
         console.error(error);

@@ -110,7 +110,6 @@ function checkIf1stTime() {
 // Función para actualizar la interfaz de usuario
 function updateUI(user, first) {
 
-    // Lee el atributo de datos que establecimos en loader.js
     const environment = document.body.dataset.environment;
 
     // Comprueba si el entorno es 'dev' para añadir el emoji
