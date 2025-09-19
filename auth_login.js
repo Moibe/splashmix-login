@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Puedes elegir el nombre del parámetro que quieras, por ejemplo 'logout' o 'action=signout'
     if (urlParams.has('logout') && urlParams.get('logout') === 'true') {
+        console.log("Cumplió los parámetros de logout...")
                 
         firebase.auth().signOut()
             .then(() => {
