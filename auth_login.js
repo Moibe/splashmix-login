@@ -9,7 +9,7 @@ const linkApp = document.getElementById('link_app');
 const logoutButton = document.getElementById('logout-button');
 const info_text = document.getElementById('info_text');
 
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
     console.log("Versión 0.0.0")
     const urlParams = new URLSearchParams(window.location.search);
     
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.replace(cleanUrl);
             });
     }
-});
+})();
 
 signinButton.addEventListener('click', () => {
     firebase.auth().signInWithPopup(provider)
