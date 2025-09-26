@@ -2,10 +2,6 @@ import { environment } from './environment.js';
 
 document.body.setAttribute('data-environment', environment);
 
-// 2. Establece un atributo de datos en el cuerpo del documento
-// Esto hace que la información del entorno esté disponible para todos los scripts.
-document.body.setAttribute('data-environment', environment);
-
 // 3. Determina el nombre del archivo de configuración
 const configFileName = (environment === 'dev') ? 'config_dev.js' : 'config_prod.js';
 
