@@ -9,6 +9,109 @@ const linkApp = document.getElementById('link_app');
 const logoutButton = document.getElementById('logout-button');
 const info_text = document.getElementById('info_text');
 
+// Detectar y guardar idioma del navegador al cargar la página
+(function() {
+    const userLanguage = navigator.language || navigator.userLanguage || 'en';
+    localStorage.setItem('language', userLanguage);
+    console.log('Idioma del navegador detectado:', userLanguage);
+})();
+
+// Opción 1: Detectar país usando IP Geolocation (ipapi.co)
+(function() {
+    async function getCountryFromIP() {
+        try {
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            const country = data.country_code || null; // "ES", "MX", "US", etc.
+            localStorage.setItem('country_ip', country);
+            console.log('País detectado (IP):', country);
+        } catch (error) {
+            console.log('Error detectando país desde IP:', error);
+            localStorage.setItem('country_ip', null);
+        }
+    }
+    getCountryFromIP();
+})();
+
+// Opción 2: Detectar país usando Geolocation API del navegador
+(function() {
+    function getCountryFromGeolocation() {
+        return new Promise((resolve) => {
+            // Obtener el valor actual de localStorage
+            const existingCountry = localStorage.getItem('country_geolocation');
+            
+            // Si existe y NO es null, no preguntar
+            if (existingCountry !== null && existingCountry !== 'null') {
+                console.log('País (Geolocation) ya existe en localStorage:', existingCountry);
+                resolve(existingCountry);
+                return;
+            }
+
+            // Si no existe O es null, PREGUNTAR
+            if (!navigator.geolocation) {
+                console.log('Geolocation no está disponible en este navegador');
+                resolve(null);
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    try {
+                        const { latitude, longitude } = position.coords;
+                        console.log('Coordenadas obtenidas:', latitude, longitude);
+                        
+                        // Usar servicio de reverse geocoding (nominatim de OpenStreetMap - gratis)
+                        const response = await fetch(
+                            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+                        );
+                        const data = await response.json();
+                        
+                        // Extraer código de país del resultado
+                        const country = data.address?.country_code?.toUpperCase() || null;
+                        localStorage.setItem('country_geolocation', country);
+                        console.log('País detectado (Geolocation):', country);
+                        resolve(country);
+                    } catch (error) {
+                        console.log('Error en reverse geocoding:', error);
+                        resolve(null);
+                    }
+                },
+                (error) => {
+                    console.log('Usuario rechazó permisos de Geolocation o error:', error.message);
+                    // Guardar null para indicar que el usuario rechazó
+                    localStorage.setItem('country_geolocation', 'null');
+                    resolve(null);
+                }
+            );
+        });
+    }
+    getCountryFromGeolocation();
+})();
+
+// Opción 3: Detectar país desde el servidor (requiere backend)
+(function() {
+    async function getCountryFromHeader() {
+        try {
+            // Crear un endpoint simple en tu backend que devuelva el país desde los headers
+            // Ejemplo: GET /api/user-country
+            // Si usas Cloudflare: const country = req.headers['cf-ipcountry'];
+            
+            // Por ahora, usamos un servicio externo que simula el behavior del servidor
+            // Este servicio devuelve información basada en tu IP como si fuera un header del servidor
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            const country = data.country_code || null;
+            
+            localStorage.setItem('country_header', country);
+            console.log('País detectado (Header/Server):', country);
+        } catch (error) {
+            console.log('Error detectando país desde servidor:', error);
+            localStorage.setItem('country_header', null);
+        }
+    }
+    getCountryFromHeader();
+})();
+
 (function() {
     console.log("Versión 0.0.0")
     const urlParams = new URLSearchParams(window.location.search);
