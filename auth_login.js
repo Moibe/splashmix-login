@@ -112,6 +112,39 @@ const info_text = document.getElementById('info_text');
     getCountryFromHeader();
 })();
 
+// Detectar fuente de tráfico (origen del usuario)
+(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let source = 'directo'; // Valor por defecto
+
+    // 1. Prioridad: Parámetro en la URL (?source=xyz o ?origen=xyz)
+    if (urlParams.has('source')) {
+        source = urlParams.get('source');
+    } else if (urlParams.has('origen')) {
+        source = urlParams.get('origen');
+    } 
+    // 2. Prioridad: Referrer (de dónde vino el clic)
+    else if (document.referrer) {
+        if (document.referrer.includes('print.splashmix.ink') || document.referrer.includes('print.splashmix.com')) {
+            source = 'print';
+        } else if (document.referrer.includes('splashmix.ink') || document.referrer.includes('splashmix.com')) {
+            source = 'landing';
+        } else {
+            // Guardamos el dominio del referrer si es otro desconocido
+            try {
+                const referrerUrl = new URL(document.referrer);
+                source = referrerUrl.hostname;
+            } catch (e) {
+                source = 'referral_unknown';
+            }
+        }
+    }
+
+    // Guardar en localStorage
+    localStorage.setItem('traffic_source', source);
+    console.log('Fuente de tráfico detectada:', source);
+})();
+
 (function() {
     console.log("Versión 0.0.0")
     const urlParams = new URLSearchParams(window.location.search);
