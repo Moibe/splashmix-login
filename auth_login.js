@@ -9,6 +9,9 @@ const linkApp = document.getElementById('link_app');
 const logoutButton = document.getElementById('logout-button');
 const info_text = document.getElementById('info_text');
 
+// ===== BANDERAS DE CONTROL =====
+const ENABLE_GEOLOCATION = false; // Cambiar a true para activar geolocalización
+
 // Detectar y guardar idioma del navegador al cargar la página
 (function() {
     const userLanguage = navigator.language || navigator.userLanguage || 'en';
@@ -34,6 +37,7 @@ const info_text = document.getElementById('info_text');
 })();
 
 // Opción 2: Detectar país usando Geolocation API del navegador
+if (ENABLE_GEOLOCATION) {
 (function() {
     function getCountryFromGeolocation() {
         return new Promise((resolve) => {
@@ -87,6 +91,7 @@ const info_text = document.getElementById('info_text');
     }
     getCountryFromGeolocation();
 })();
+}
 
 // Opción 3: Detectar país desde el servidor (requiere backend)
 (function() {
